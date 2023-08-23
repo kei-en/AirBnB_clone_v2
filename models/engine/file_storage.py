@@ -26,15 +26,15 @@ class FileStorage:
         Return:
             returns a dictionary of __object
         """
-        dic = {}
+        dct = {}
         if cls:
             dictionary = self.__objects
             for key in dictionary:
                 partition = key.replace('.', ' ')
                 partition = shlex.split(partition)
                 if (partition[0] == cls.__name__):
-                    dic[key] = self.__objects[key]
-            return (dic)
+                    dct[key] = self.__objects[key]
+            return dct
         else:
             return self.__objects
 
@@ -50,11 +50,11 @@ class FileStorage:
     def save(self):
         """serialize the file path to JSON file path
         """
-        my_dict = {}
+        file_dict = {}
         for key, value in self.__objects.items():
-            my_dict[key] = value.to_dict()
+            file_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
-            json.dump(my_dict, f)
+            json.dump(file_dict, f)
 
     def reload(self):
         """serialize the file path to JSON file path

@@ -37,22 +37,22 @@ class DBStorage:
         Return:
             returns a dictionary of __object
         """
-        dic = {}
+        dct = {}
         if cls:
             if type(cls) is str:
                 cls = eval(cls)
             query = self.__session.query(cls)
             for elem in query:
                 key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
+                dct[key] = elem
         else:
             lists = [State, City, User, Place, Review, Amenity]
             for clase in lists:
                 query = self.__session.query(clase)
                 for elem in query:
                     key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
-        return (dic)
+                    dct[key] = elem
+        return dct
 
     def new(self, obj):
         """add a new element in the table

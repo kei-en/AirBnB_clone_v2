@@ -25,11 +25,11 @@ class State(BaseModel, Base):
         lists = []
         result = []
         for key in var:
-            city = key.replace('.', ' ')
-            city = shlex.split(city)
-            if (city[0] == 'City'):
+            cty = key.replace('.', ' ')
+            cty = shlex.split(cty)
+            if (cty[0] == 'City'):
                 lists.append(var[key])
-        for elem in lists:
-            if (elem.state_id == self.id):
-                result.append(elem)
+        for item in lists:
+            if (item.state_id == self.id):
+                result.append(item)
         return (result)
