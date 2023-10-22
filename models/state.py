@@ -16,20 +16,14 @@ class State(BaseModel, Base):
     """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship("City", cascade='all, delete, delete-orphan',
-                          backref="state")
+    cities = relationship("City", cascade='delete', backref="state")
 
-    @property
-    def cities(self):
-        var = models.storage.all()
-        lists = []
-        result = []
-        for key in var:
-            cty = key.replace('.', ' ')
-            cty = shlex.split(cty)
-            if (cty[0] == 'City'):
-                lists.append(var[key])
-        for item in lists:
-            if (item.state_id == self.id):
-                result.append(item)
-        return (result)
+    if getenv("HBNB_TYPE_STORAGE") != "db":
+        @property
+        def cities(self):
+            """Get a list of all related City objects."""
+            city_list = []
+            for city in list(models.storage.all(City).values()):
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
